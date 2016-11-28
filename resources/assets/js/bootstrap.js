@@ -1,5 +1,6 @@
 
-window._ = require('lodash');
+window._ = require('underscore');
+require('./lib/mixins');
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -8,7 +9,20 @@ window._ = require('lodash');
  */
 
 window.$ = window.jQuery = require('jquery');
-require('bootstrap-sass');
+
+/**
+ * Echo exposes an expressive API for subscribing to channels and listening
+ * for events that are broadcast by Laravel. Echo and event broadcasting
+ * allows your team to easily build robust real-time web applications.
+ */
+// import Echo from "laravel-echo"
+
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: Laravel.pusherKey,
+//     cluster: Laravel.pusherCluster,
+//     appId: Laravel.pusherAppId
+// });
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -25,21 +39,17 @@ require('vue-resource');
  * included with Laravel will automatically verify the header's value.
  */
 
+// Set appropriate headers.
 Vue.http.interceptors.push((request, next) => {
-    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
+    request.headers['Accept'] = 'application/json';
 
     next();
 });
 
 /**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
+ * Directives
  */
 
-// import Echo from "laravel-echo"
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
-// });
+/**
+ * Filters
+ */

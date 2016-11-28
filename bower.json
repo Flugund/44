@@ -1,0 +1,26 @@
+{
+  "name": "44",
+  "homepage": "https://github.com/Flugund/44",
+  "authors": [
+    "Sam Nydahl <sam.nydahl@smb.nu>"
+  ],
+  "description": "hackathon",
+  "main": "main.js",
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "google-map": "^1.1.14",
+    "vue": "1.0.26",
+    "vue-resource": "^0.9.3",
+    "vue-router": "0.7.11",
+    "underscore": "^1.8.3"
+  },
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

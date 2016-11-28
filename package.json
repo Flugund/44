@@ -1,18 +1,54 @@
 {
-  "private": true,
+  "name": "44",
+  "version": "1.0.0",
+  "description": "Team 44 project",
+  "main": "index.js",
   "scripts": {
-    "prod": "gulp --production",
-    "dev": "gulp watch"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flugund/44.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Flugund/44/issues"
+  },
+  "homepage": "https://github.com/Flugund/44#readme",
+  "browser": {
+    "vue": "./resources/assets/bower/vue/dist/vue.min.js",
+    "vue-resource": "./resources/assets/bower/vue-resource/dist/vue-resource.min.js",
+    "vue-router": "./resources/assets/bower/vue-router/dist/vue-router.min.js",
+    "jquery": "./resources/assets/bower/jquery/dist/jquery.min.js"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "jquery": "jQuery"
+  },
+  "babel": {
+    "plugins": [
+      "transform-html-import-to-string"
+    ]
   },
   "devDependencies": {
-    "bootstrap-sass": "^3.3.7",
     "gulp": "^3.9.1",
-    "jquery": "^3.1.0",
-    "laravel-elixir": "^6.0.0-14",
-    "laravel-elixir-vue-2": "^0.2.0",
+    "laravel-elixir": "^6.0.0-9",
+    "laravel-elixir-browsersync-official": "^1.0.0",
+    "laravel-elixir-vue": "^0.1.4",
     "laravel-elixir-webpack-official": "^1.0.2",
-    "lodash": "^4.16.2",
-    "vue": "^2.0.1",
-    "vue-resource": "^1.0.3"
+    "node-sass": "^3.8.0",
+    "path": "^0.12.7",
+    "sass-loader": "^4.0.0",
+    "babel-plugin-transform-html-import-to-string": "0.0.1"
+  },
+  "dependencies": {
+    "laravel-echo": "^1.0.1",
+    "pusher-js": "^3.2.1",
+    "underscore": "^1.8.3"
   }
 }

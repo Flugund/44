@@ -9,12 +9,34 @@ require('./bootstrap');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
+ * the body of the page. From here, you may begin adding components to
+ * the application, or feel free to tweak this setup for your needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+var VueRouter = require('vue-router');
+Vue.use(VueRouter);
 
-const app = new Vue({
-    el: '#app'
+
+// The router needs a root component to render.
+// For demo purposes, we will just use an empty one
+// because we are using the HTML as the app template.
+// !! Note that the App is not a Vue instance.
+var App = Vue.extend({
+
 });
+
+// Create a router instance.
+// You can pass in additional options here, but let's
+// keep it simple for now.
+var router = new VueRouter();
+
+// Define some routes.
+// Each route should map to a component. The "component" can
+// either be an actual component constructor created via
+// Vue.extend(), or just a component options object.
+router.map(require('./routes'));
+
+// Now we can start the app!
+// The router will create an instance of App and mount to
+// the element matching the selector #app.
+router.start(App, '#app');
