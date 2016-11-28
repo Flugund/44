@@ -18,26 +18,6 @@ body {
   padding: 0;
 }
 
-
-// .icon-wrapper {
-//   display: block;
-//   font-weight: 200;
-//   padding: 1em;
-//   text-align: center;
-
-//   > * {
-//     margin: 0 auto;
-//     margin-bottom: .5em;
-//   }
-// }
-
-// .loader {
-//   > * {
-//     margin: 0 auto;
-//     margin-top: 15%;
-//   }
-// }
-
 .gps_ring {
   border: 2px solid #1d3c5d;
   -webkit-border-radius: 30px;
@@ -50,11 +30,6 @@ body {
   &.inline {
     display: inline-block;
   }
-
-  // &.medium {
-  //   height: 50px;
-  //   width: 50px;
-  // }
 
   &.large {
     border: 5px solid #1d3c5d;

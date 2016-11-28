@@ -1,5 +1,4 @@
 <style lang="sass" scoped>
-// $accent: #FFD545;
 $accent: #000;
 
 #feedback {
@@ -93,7 +92,7 @@ $accent: #000;
         },
 
         ready() {
-
+            // ..
         },
 
         methods: {
@@ -105,17 +104,39 @@ $accent: #000;
                 // @TODO - Persist data-point
                 this.isLoading = true;
 
+                this.getLocation((coordinates) => {
+                    console.log('Persist: ', coordinates);
 
-                // @TODO - on backend callback.
-                setTimeout(() => {
-                    this.isLoading = false;
-                    this.isDone = true;
-
+                    // @TODO - on backend callback.
                     setTimeout(() => {
-                        this.isDone = false;
-                    }, 4000);
+                        this.isLoading = false;
+                        this.isDone = true;
 
-                }, 2000);
+                        setTimeout(() => {
+                            this.isDone = false;
+                            this.toggleOpts();
+                        }, 4000);
+
+                    }, 2000);
+                }, (errorMsg) => {
+                    alert(errorMsg);
+                });
+            },
+
+            getLocation(successCb, FailCb) {
+                // Try HTML5 geolocation.
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        successCb({
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        });
+                    }, () => {
+                        failCb('Error: The Geolocation service failed.');
+                    });
+                } else {
+                    failCb('Error: Your browser doesn\'t support geolocation.');
+                }
             }
         }
     }

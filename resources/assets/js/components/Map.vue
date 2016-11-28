@@ -44,7 +44,8 @@
 
         data() {
             return {
-                heatmapData: []
+                heatmapData: [],
+                map: {}
             };
         },
 
