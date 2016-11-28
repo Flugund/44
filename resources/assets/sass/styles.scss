@@ -1,5 +1,71 @@
 @charset 'utf-8';
 
-html { height: 100% }
-body { height: 100%; margin: 0; padding: 0 }
-#map-canvas { height: 100%; width: 100%; position: absolute; top: 0; left: 0; }
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+@import '../bower/font-awesome-sass/assets/stylesheets/font-awesome';
+
+// Variables
+@import "variables";
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+// .icon-wrapper {
+//   display: block;
+//   font-weight: 200;
+//   padding: 1em;
+//   text-align: center;
+
+//   > * {
+//     margin: 0 auto;
+//     margin-bottom: .5em;
+//   }
+// }
+
+// .loader {
+//   > * {
+//     margin: 0 auto;
+//     margin-top: 15%;
+//   }
+// }
+
+.gps_ring {
+  border: 2px solid #1d3c5d;
+  -webkit-border-radius: 30px;
+  height: 18px;
+  width: 18px;
+  -webkit-animation: pulsate 1s ease-out;
+  -webkit-animation-iteration-count: infinite;
+  opacity: 0;
+
+  &.inline {
+    display: inline-block;
+  }
+
+  // &.medium {
+  //   height: 50px;
+  //   width: 50px;
+  // }
+
+  &.large {
+    border: 5px solid #1d3c5d;
+    -webkit-border-radius: 50px;
+    height: 100px;
+    width: 100px;
+  }
+}
+
+@-webkit-keyframes pulsate {
+  0% {-webkit-transform: scale(.1, .1); opacity: 0;}
+  50% {opacity: 1;}
+  100% {-webkit-transform: scale(1.2, 1.2); opacity: 0;}
+}
