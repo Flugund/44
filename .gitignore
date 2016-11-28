@@ -9,14 +9,6 @@ Homestead.yaml
 
 resources/assets/bower/
 
-public/**
-public/css/*
-!public/.htaccess
-!public/index.php
-!public/robots.txt
-!public/*.png
-!public/*.ico
-
 ### Various ###
 tests/_output/*
 .sass-cache
