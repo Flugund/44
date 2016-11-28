@@ -12,7 +12,13 @@ class FeedbackController extends Controller
         $userLatitude = $request->get('latitude');
         $userMaxRadius = $request->get('radius');
 
-        $feedbacks = $feedback->where('longitude', '>', $userLongitude - $userMaxRadius)
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+
+        $feedbacks = $feedback->where('longitude', '>', $userLongitude - $userMaxRadiusDegree)
                 ->where('longitude', '<', $userLongitude + $userMaxRadius)
                 ->where('latitude', '>', $userLatitude - $userMaxRadius)
                 ->where('latitude', '<', $userLatitude + $userMaxRadius)
@@ -23,7 +29,7 @@ class FeedbackController extends Controller
 
     public function store(Request $request)
     {
-        
+
     }
 
     public function update()
