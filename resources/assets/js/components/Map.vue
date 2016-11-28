@@ -7,9 +7,36 @@
 </template>
 
 <script>
+    import MapSettings from './MapSettings';
+
     export default {
+        route: {
+            data(transition) {
+                // fetch data-points
+                var apiData = [
+                    {long: 40.730610, lat: -73.935242},
+                    {long: 40.730610, lat: -73.945242},
+                    {long: 40.730610, lat: -73.955242},
+                    {long: 40.730610, lat: -73.965242},
+
+                    {long: 40.750610, lat: -73.975242},
+                    {long: 40.750610, lat: -73.975242},
+                    {long: 40.750610, lat: -73.975242},
+                    {long: 40.750610, lat: -73.975242},
+                ];
+
+                _.each(apiData, (item) => {
+                    this.heatmapData.push(new google.maps.LatLng(item.long, item.lat));
+                });
+
+                transition.next(transition);
+            }
+        },
+
         data() {
-            return {};
+            return {
+                heatmapData: []
+            };
         },
 
         ready() {
@@ -18,240 +45,7 @@
 
         methods: {
             initMap() {
-                /* Data points defined as an array of LatLng objects */
-                var heatmapData = [
-                    new google.maps.LatLng(40.730610, -73.935242),
-                    new google.maps.LatLng(40.730610, -73.945242),
-                    new google.maps.LatLng(40.730610, -73.955242),
-                    new google.maps.LatLng(40.730610, -73.965242),
-
-                    new google.maps.LatLng(40.750610, -73.975242),
-                    new google.maps.LatLng(40.750610, -73.965242),
-                    new google.maps.LatLng(40.750610, -73.965242),
-                    new google.maps.LatLng(40.750610, -73.965242),
-                ];
-
-                var styledMapType = new google.maps.StyledMapType(
-                    [
-                      {
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#f5f5f5"
-                          }
-                        ]
-                      },
-                      {
-                        "elementType": "labels.icon",
-                        "stylers": [
-                          {
-                            "visibility": "off"
-                          }
-                        ]
-                      },
-                      {
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#616161"
-                          }
-                        ]
-                      },
-                      {
-                        "elementType": "labels.text.stroke",
-                        "stylers": [
-                          {
-                            "color": "#f5f5f5"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "administrative",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "visibility": "off"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "administrative.land_parcel",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#bdbdbd"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "poi",
-                        "stylers": [
-                          {
-                            "visibility": "off"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "poi",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#eeeeee"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "poi",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#757575"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "poi.park",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#e5e5e5"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "poi.park",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#9e9e9e"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#ffffff"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road",
-                        "elementType": "labels.icon",
-                        "stylers": [
-                          {
-                            "visibility": "off"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road.arterial",
-                        "stylers": [
-                          {
-                            "visibility": "off"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road.arterial",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#757575"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road.highway",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#dadada"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road.highway",
-                        "elementType": "labels",
-                        "stylers": [
-                          {
-                            "visibility": "off"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road.highway",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#616161"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road.local",
-                        "stylers": [
-                          {
-                            "visibility": "off"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "road.local",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#9e9e9e"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "transit",
-                        "stylers": [
-                          {
-                            "visibility": "off"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "transit.line",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#e5e5e5"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "transit.station",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#eeeeee"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "water",
-                        "elementType": "geometry",
-                        "stylers": [
-                          {
-                            "color": "#c9c9c9"
-                          }
-                        ]
-                      },
-                      {
-                        "featureType": "water",
-                        "elementType": "labels.text.fill",
-                        "stylers": [
-                          {
-                            "color": "#9e9e9e"
-                          }
-                        ]
-                      }
-                    ]
-                );
+                var styledMapType = new google.maps.StyledMapType(MapSettings);
 
                 var nyc = new google.maps.LatLng(40.730610, -73.935242);
 
@@ -263,7 +57,7 @@
                 });
 
                 var heatmap = new google.maps.visualization.HeatmapLayer({
-                  data: heatmapData
+                  data: this.heatmapData
                 });
                 heatmap.setMap(map);
                 map.mapTypes.set('styled_map', styledMapType);
