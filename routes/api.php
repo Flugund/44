@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+Route::resource('feedback', 'FeedbackController', ['only' => ['index', 'store', 'update']]);
+
+Route::resource('area', 'AreaController', ['only' => ['index']]);
+
+Route::resource('feedback-category', 'FeedbackCategoryController', ['only' => ['index']]);
+
+Route::resource('fixing-stages', 'FixingStagesController', ['only' => ['index']]);
