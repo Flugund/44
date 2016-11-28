@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     /*
@@ -54,11 +53,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => 'team44.cluster-ctcrbvbljfye.us-east-1.rds.amazonaws.com', //env('DB_HOST', 'team44.cluster-ctcrbvbljfye.us-east-1.rds.amazonaws.com'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'database' => 'team44', // env('DB_DATABASE', 'team44'),
+            'username' => 'admin', // env('DB_USERNAME', 'admin'),
+            'password' => 'team44reinvent', // env('DB_PASSWORD', 'team44reinvent'),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
