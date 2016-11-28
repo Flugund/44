@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <link rel=stylesheet href="./public/css/styles.css">
+    <link rel=stylesheet href="css/styles.css">
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyDi2LVi_cyDP9ibCRsm-KWlKUX40slMn6g&libraries=visualization">// <![CDATA[
 
