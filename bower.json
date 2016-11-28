@@ -8,7 +8,6 @@
   "main": "main.js",
   "dependencies": {
     "jquery": "^3.1.0",
-    "google-map": "^1.1.14",
     "vue": "1.0.26",
     "vue-resource": "^0.9.3",
     "vue-router": "0.7.11",
