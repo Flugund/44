@@ -1,0 +1,67 @@
+### Laravel ###
+/vendor
+/node_modules
+/public/storage
+Homestead.yaml
+Homestead.json
+.env
+
+resources/assets/bower/
+
+public/**
+public/css/*
+!public/.htaccess
+!public/index.php
+!public/robots.txt
+!public/*.png
+!public/*.ico
+
+### Various ###
+tests/_output/*
+.sass-cache
+*.log
+
+### PhpStorm ###
+.idea
+
+### SublimeText ###
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+
+*.sublime-workspace
+*.sublime-project
+
+sftp-config.json
+_ide_helper.php
+
+### OSX ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Sublime gulp plugin
+*.sublime-gulp.cache
