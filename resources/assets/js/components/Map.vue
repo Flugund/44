@@ -1,12 +1,21 @@
 <style lang="sass" scoped>
-
+#map-canvas {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 </style>
 
 <template>
     <div id="map-canvas"></div>
+
+    <feedback></feedback>
 </template>
 
 <script>
+    import Feedback from './Feedback';
     import MapSettings from './MapSettings';
 
     export default {
@@ -35,7 +44,8 @@
 
         data() {
             return {
-                heatmapData: []
+                heatmapData: [],
+                map: {}
             };
         },
 
@@ -62,6 +72,8 @@
                 heatmap.setMap(map);
                 map.mapTypes.set('styled_map', styledMapType);
             }
-        }
+        },
+
+        components: { Feedback }
     }
 </script>

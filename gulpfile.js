@@ -24,11 +24,5 @@ elixir(mix => {
                   app: path.resolve(__dirname, 'resources/assets/js')
                 }
             }
-        });
-        // .copy('resources/assets/img/', 'public/img/')
-        // .copy('resources/assets/fonts/', 'public/fonts/')
-        // .copy('resources/assets/bower/font-awesome-sass/assets/fonts/**/*', 'public/fonts/')
-        // .browserSync({
-        //     proxy: 'fourtyfour.smb.dev'
-        // });
+        }).copy('resources/assets/bower/font-awesome-sass/assets/fonts/**/*', 'public/fonts/');
 });
