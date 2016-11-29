@@ -15,7 +15,7 @@ class AreaController extends Controller
         $userLongitudeMax = $request->get('longitude_max');
         $userLatitudeMax = $request->get('latitude_max');
 
-        $areas = DB::select('exec return_area_score(?,?,?,?)', [$userLongitudeMin, $userLatitudeMin, $userLongitudeMax, $userLatitudeMax]); 
+        $areas = DB::select('call return_area_score(?,?,?,?)', [$userLongitudeMin, $userLatitudeMin, $userLongitudeMax, $userLatitudeMax]); 
 
         return response()->json($areas);
     }
