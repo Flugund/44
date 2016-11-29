@@ -6,6 +6,45 @@
   top: 0;
   left: 0;
 }
+
+.current-feedback {
+    position: fixed;
+    top: 4em;
+
+    left: 1em;
+
+    max-width: 400px;
+
+    background: #fff;
+    padding: 1em;
+
+    z-index: 1000;
+
+    button {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: #fff;
+        background-color: #337ab7;
+        border-color: #2e6da4;
+    }
+}
 </style>
 
 <template>
@@ -14,6 +53,16 @@
     <div id="map-canvas"></div>
 
     <feedback></feedback>
+
+    <div v-if="showCurrentFeedback" class="current-feedback">
+        <h2>{{ currentFeedback.address }}</h2>
+
+        <img src="http://dummyimage.com/370x180/4d494d/686a82.gif&text=placeholder+image" alt="placeholder+image">
+
+        <hr>
+
+        <button @click="removeCurrentFeedback">I fixed it!</button>
+    </div>
 </template>
 
 <script>
@@ -24,7 +73,10 @@
 
     export default {
         data() {
-            return {};
+            return {
+                'showCurrentFeedback': false,
+                'currentFeedback' : {}
+            };
         },
 
         ready() {
@@ -76,6 +128,15 @@
                             position: new google.maps.LatLng(item.lat, item.lon),
                             map: map
                         });
+
+                        marker.addListener('click', () => {
+                            map.setCenter(marker.getPosition());
+
+                            item.marker = marker;
+
+                            this.$set('currentFeedback', item);
+                            this.$set('showCurrentFeedback', true);
+                        });
                     });
                 });
 
@@ -87,6 +148,12 @@
 
                     heatmap.setData(heatmapData);
                 });
+            },
+
+            removeCurrentFeedback(marker) {
+                this.currentFeedback.marker.setMap(null);
+                this.$set('currentFeedback', {});
+                this.$set('showCurrentFeedback', false);
             }
         },
 
