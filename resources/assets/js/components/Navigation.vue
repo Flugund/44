@@ -30,6 +30,10 @@
     padding: 1em;
     border-left: thick solid #000;
 
+    @media (max-width: 600px) {
+        width: 100%;
+    }
+
     h1 {
         font-size: 3em;
     }
