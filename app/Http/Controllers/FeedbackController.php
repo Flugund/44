@@ -8,7 +8,17 @@ use DB;
 
 class FeedbackController extends Controller
 {
-    public function index(Request $request, Feedback $feedback) 
+    public function score(Request $request)
+    {
+        $long = $request->get('longitude');
+        $lat = $request->get('latitude');
+
+        $feedbacks = DB::select('call get_location_score(?, ?)', [$long, $lat]);
+
+        return response()->json($feedbacks);
+    }
+
+    public function index(Request $request, Feedback $feedback)
     {
         $userLongitudeMin = $request->get('longitude_min');
         $userLatitudeMin = $request->get('latitude_min');
@@ -18,7 +28,7 @@ class FeedbackController extends Controller
 
         $status = $request->has('status') ? $request->get('status') : 2;
 
-        $feedbacks = DB::select('call get_status_feedbacks(?,?,?,?,?)', [$userLongitudeMin, $userLatitudeMin, $userLongitudeMax, $userLatitudeMax, $status]); 
+        $feedbacks = DB::select('call get_status_feedbacks(?,?,?,?,?)', [$userLongitudeMin, $userLatitudeMin, $userLongitudeMax, $userLatitudeMax, $status]);
 
         return response()->json($feedbacks);
     }

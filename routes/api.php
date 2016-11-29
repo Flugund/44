@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('feedback-score', 'FeedbackController@score');
+
 Route::resource('feedback', 'FeedbackController', ['only' => ['index', 'store', 'update']]);
 
 Route::resource('area', 'AreaController', ['only' => ['index']]);
