@@ -1,5 +1,5 @@
 module.exports = {
-    getLocation(successCb, FailCb) {
+    getLocation(successCb, failCb) {
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
