@@ -5,7 +5,7 @@
     right: 1em;
     z-index: 1000;
     text-align: center;
-    
+
     .fa-user {
         font-size: 2em;
         width: 50px;
@@ -46,10 +46,11 @@
         {{ user.points }}
     </div>
 
-    <div class="user" v-if="user.show">
+    <div class="user" v-if="showUser">
         <h1>Points: {{ user.points }}</h1>
 
-        <h2 v-for="feedback in user.feedbacks">{{ feedback.title }}</h2>
+        <h2>Feedbacks: </h2>
+        <h2 v-for="feedback in user.feedbacks">{{ feedback.feedback_category.cat_text }}</h2>
     </div>
 </template>
 
@@ -57,26 +58,20 @@
     export default {
         data() {
             return {
-                'user' : {
-                    'show': false,
-                    'points': 13123,
-                    'feedbacks': [
-                        {'title': 'test1'},
-                        {'title': 'test2'},
-                        {'title': 'test3'},
-                        {'title': 'test4'}
-                    ]
-                }
+                'showUser': false,
+                'user' : {}
             };
         },
 
         ready() {
-
+            this.$http.get(`/api/user/1`).then((res) => {
+                this.$set('user', res.json());
+            });
         },
 
         methods: {
             toggleUserProfile() {
-                this.user.show = !this.user.show;
+                this.showUser = !this.showUser;
             }
         }
     }

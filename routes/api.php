@@ -15,8 +15,10 @@ use Illuminate\Http\Request;
 
 Route::resource('feedback', 'FeedbackController', ['only' => ['index', 'store', 'update']]);
 
-Route::resource('area', 'AreaController', ['only' => ['index']]);
+Route::resource('area', 'AreaController', ['only' => ['show']]);
 
 Route::resource('feedback-category', 'FeedbackCategoryController', ['only' => ['index']]);
 
 Route::resource('fixing-stages', 'FixingStagesController', ['only' => ['index']]);
+
+Route::resource('user', 'UserController', ['only' => ['show']]);

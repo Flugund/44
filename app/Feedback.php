@@ -13,4 +13,9 @@ class Feedback extends Model
     protected $fillable = [
         'lon', 'lat', 'feedback_category_id', 'picture_url', 'userid'
     ];
+
+    public function feedbackCategory()
+    {
+        return $this->belongsTo('App\FeedbackCategory', 'feedback_category_id', 'cid');
+    }
 }
