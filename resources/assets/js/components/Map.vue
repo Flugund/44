@@ -45,6 +45,26 @@
         border-color: #2e6da4;
     }
 }
+
+.leader-board {
+    z-index: 1000;
+
+    position: fixed;
+
+    bottom: 2em;
+    left: 1em;
+
+    height: 200px;
+    width: 300px;
+
+    padding: 1em;
+
+    background: #fff;
+
+    img {
+        max-width: 100%;
+    }
+}
 </style>
 
 <template>
@@ -53,6 +73,10 @@
     <div id="map-canvas"></div>
 
     <feedback></feedback>
+
+    <div class="leader-board">
+        <img src="https://s3.amazonaws.com/reinvent16team44/screen-shot.png" alt="lead">
+    </div>
 
     <div v-if="showCurrentFeedback" class="current-feedback">
         <h2>{{ currentFeedback.address }}</h2>
