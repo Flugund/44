@@ -15,38 +15,13 @@
 </template>
 
 <script>
+    import Locator from './Locator';
     import Feedback from './Feedback';
     import MapSettings from './MapSettings';
 
     export default {
-        route: {
-            data(transition) {
-                // fetch data-points
-                var apiData = [
-                    {long: 40.730610, lat: -73.935242},
-                    {long: 40.730610, lat: -73.945242},
-                    {long: 40.730610, lat: -73.955242},
-                    {long: 40.730610, lat: -73.965242},
-
-                    {long: 40.750610, lat: -73.975242},
-                    {long: 40.750610, lat: -73.975242},
-                    {long: 40.750610, lat: -73.975242},
-                    {long: 40.750610, lat: -73.975242},
-                ];
-
-                _.each(apiData, (item) => {
-                    this.heatmapData.push(new google.maps.LatLng(item.long, item.lat));
-                });
-
-                transition.next(transition);
-            }
-        },
-
         data() {
-            return {
-                heatmapData: [],
-                map: {}
-            };
+            return {};
         },
 
         ready() {
@@ -55,22 +30,56 @@
 
         methods: {
             initMap() {
-                var styledMapType = new google.maps.StyledMapType(MapSettings);
 
-                var nyc = new google.maps.LatLng(40.730610, -73.935242);
+                Locator.getLocation((coordinates) => {
+                    var styledMapType = new google.maps.StyledMapType(MapSettings);
 
-                var map = new google.maps.Map(document.getElementById('map-canvas'), {
-                  center: nyc,
-                  zoom: 13,
-                  mapTypeId: 'styled_map',
-                  disableDefaultUI: true
+                    // Fake location to NYC
+                    coordinates.lng = -74.1344;
+                    coordinates.lat = 40.6349;
+
+                    var map = new google.maps.Map(document.getElementById('map-canvas'), {
+                        center: new google.maps.LatLng(coordinates.lat, coordinates.lng),
+                        zoom: 13,
+                        mapTypeId: 'styled_map',
+                        disableDefaultUI: true
+                    });
+
+                    var heatmap = new google.maps.visualization.HeatmapLayer({
+                      data: []
+                    });
+                    heatmap.setMap(map);
+                    map.mapTypes.set('styled_map', styledMapType);
+
+                    google.maps.event.addListener(map, 'idle', () => {
+                        var bb = map.getBounds();
+                        var ne = bb.getNorthEast(); // top-left
+                        var sw = bb.getSouthWest(); // bottom-right
+
+                        this.fetchDataPoints(heatmap, sw.lng(), ne.lat(), ne.lng(), sw.lat());
+                    });
+                }, (errorMsg) => {
+                    alert(errorMsg);
                 });
+            },
 
-                var heatmap = new google.maps.visualization.HeatmapLayer({
-                  data: this.heatmapData
+            fetchDataPoints(heatmap, long_min, lat_min, long_max, lat_max) {
+                var heatmapData = [];
+
+                // fake the bound of the map.
+                long_min=-74.5;
+                lat_min=40.0;
+                long_max=-74.0;
+                lat_max=40.5;
+
+                this.$http.get(`/api/feedback?longitude_min=${long_min}&latitude_min=${lat_min}&longitude_max=${long_max}&latitude_max=${lat_max}`).then((res) => {
+
+                    _.each(res.json(), (item) => {
+                        heatmapData.push(new google.maps.LatLng(item.lat, item.lon));
+                    });
+
+                    heatmap.setData(heatmapData);
                 });
-                heatmap.setMap(map);
-                map.mapTypes.set('styled_map', styledMapType);
             }
         },
 

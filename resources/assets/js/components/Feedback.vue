@@ -75,6 +75,8 @@ $accent: #000;
 </template>
 
 <script>
+    import Locator from './Locator';
+
     export default {
         data() {
             return {
@@ -104,7 +106,7 @@ $accent: #000;
                 // @TODO - Persist data-point
                 this.isLoading = true;
 
-                this.getLocation((coordinates) => {
+                Locator.getLocation((coordinates) => {
                     console.log('Persist: ', coordinates);
 
                     // @TODO - on backend callback.
@@ -123,21 +125,21 @@ $accent: #000;
                 });
             },
 
-            getLocation(successCb, FailCb) {
-                // Try HTML5 geolocation.
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition((position) => {
-                        successCb({
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        });
-                    }, () => {
-                        failCb('Error: The Geolocation service failed.');
-                    });
-                } else {
-                    failCb('Error: Your browser doesn\'t support geolocation.');
-                }
-            }
+            // getLocation(successCb, FailCb) {
+            //     // Try HTML5 geolocation.
+            //     if (navigator.geolocation) {
+            //         navigator.geolocation.getCurrentPosition((position) => {
+            //             successCb({
+            //                 lat: position.coords.latitude,
+            //                 lng: position.coords.longitude
+            //             });
+            //         }, () => {
+            //             failCb('Error: The Geolocation service failed.');
+            //         });
+            //     } else {
+            //         failCb('Error: Your browser doesn\'t support geolocation.');
+            //     }
+            // }
         }
     }
 </script>
