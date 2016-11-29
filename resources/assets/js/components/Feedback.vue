@@ -8,10 +8,10 @@ $accent: #000;
     cursor: pointer;
     text-align: center;
 
-    .options {
-        margin: auto;
-        margin-bottom: 1%;
-    }
+    // .options {
+    //     margin: auto;
+    //     margin-bottom: 1%;
+    // }
 
     .button {
         margin: auto;
@@ -43,22 +43,52 @@ $accent: #000;
         padding: 3em;
     }
 }
+
+#form {
+    position: absolute;
+    top: 5%;
+    width: 100%;
+
+    .box {
+        font-size: 1.4em;
+        font-weight: 200;
+        margin: auto;
+        background-color: #fff;
+        width: 50%;
+        border-radius: 3px;
+        padding: 2em;
+    }
+}
+
+ul {
+    list-style-type: none;
+}
 </style>
 
 <template>
 <div>
     <div id="feedback">
-        <div class="options" v-if="showFeedbackOpt">
+        <!-- <div class="options" v-if="showFeedbackOpt">
             <span class="option" v-for="opt in options" @click="submit(opt.code)">
                 <span class="fa-stack fa-lg">
                   <i class="fa fa-circle fa-stack-2x"></i>
                   <i class="fa fa-trash fa-stack-1x fa-inverse"></i>
                 </span>
             </span>
-        </div>
+        </div> -->
 
         <div class="button" @click="toggleOpts">
             <i class="fa fa-plus" aria-hidden="true"></i>
+        </div>
+    </div>
+
+    <div id="form">
+        <div v-if="showFeedbackOpt" class="box">
+            <ul>
+                <li v-for="category in categories">
+                    {{ category.label }}
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -80,21 +110,33 @@ $accent: #000;
     export default {
         data() {
             return {
-                options: [
-                    { code: 'trash', icon: 'trash' },
-                    { code: 'trash', icon: 'trash' },
-                    { code: 'trash', icon: 'trash' },
-                    { code: 'trash', icon: 'trash' },
-                    { code: 'trash', icon: 'trash' },
+                // options: [
+                //     { code: 'trash', icon: 'trash' },
+                //     { code: 'trash', icon: 'trash' },
+                //     { code: 'trash', icon: 'trash' },
+                //     { code: 'trash', icon: 'trash' },
+                //     { code: 'trash', icon: 'trash' },
+                // ],
+                categories: [
+                    {label: 'lorem1'},
+                    {label: 'lorem2'},
+                    {label: 'lorem3'},
+                    {label: 'lorem4'},
+                    {label: 'lorem5'},
+                    {label: 'lorem6'},
+                    {label: 'lorem7'},
+                    {label: 'lorem8'},
                 ],
-                showFeedbackOpt: false,
+                showFeedbackOpt: true,
                 isLoading: false,
                 isDone: false
             };
         },
 
         ready() {
-            // ..
+            // this.$http.get(`api/feedback-category`).then((res) => {
+            //     this.$set('categories', res.json());
+            // });
         },
 
         methods: {
@@ -123,23 +165,7 @@ $accent: #000;
                 }, (errorMsg) => {
                     alert(errorMsg);
                 });
-            },
-
-            // getLocation(successCb, FailCb) {
-            //     // Try HTML5 geolocation.
-            //     if (navigator.geolocation) {
-            //         navigator.geolocation.getCurrentPosition((position) => {
-            //             successCb({
-            //                 lat: position.coords.latitude,
-            //                 lng: position.coords.longitude
-            //             });
-            //         }, () => {
-            //             failCb('Error: The Geolocation service failed.');
-            //         });
-            //     } else {
-            //         failCb('Error: Your browser doesn\'t support geolocation.');
-            //     }
-            // }
+            }
         }
     }
 </script>
