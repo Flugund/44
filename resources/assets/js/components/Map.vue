@@ -28,7 +28,7 @@
         },
 
         ready() {
-            // google.maps.event.addDomListener(window, 'load', this.initMap());
+            google.maps.event.addDomListener(window, 'load', this.initMap());
         },
 
         methods: {
