@@ -37,10 +37,6 @@
                 Locator.getLocation((coordinates) => {
                     var styledMapType = new google.maps.StyledMapType(MapSettings);
 
-                    // Fake location to NYC
-                    coordinates.lng = -74.1344;
-                    coordinates.lat = 40.6349;
-
                     var map = new google.maps.Map(document.getElementById('map-canvas'), {
                         center: new google.maps.LatLng(coordinates.lat, coordinates.lng),
                         zoom: 13,
@@ -69,7 +65,7 @@
             fetchDataPoints(heatmap, long_min, lat_min, long_max, lat_max) {
                 var heatmapData = [];
 
-                // fake the bound of the map.
+                // fake the bounds of the map.
                 long_min=-74.5;
                 lat_min=40.0;
                 long_max=-74.0;
