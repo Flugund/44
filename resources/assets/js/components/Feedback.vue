@@ -8,11 +8,6 @@ $accent: #000;
     cursor: pointer;
     text-align: center;
 
-    // .options {
-    //     margin: auto;
-    //     margin-bottom: 1%;
-    // }
-
     .button {
         margin: auto;
         width: 50px;
@@ -48,9 +43,11 @@ $accent: #000;
     position: absolute;
     top: 5%;
     width: 100%;
+    height: 80%;
+    overflow-y: scroll;
 
     .box {
-        font-size: 1.4em;
+        font-size: 1.2em;
         font-weight: 200;
         margin: auto;
         background-color: #fff;
@@ -62,21 +59,25 @@ $accent: #000;
 
 ul {
     list-style-type: none;
+
+    li {
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        padding: .5em;
+        margin-bottom: .3em;
+        cursor: pointer;
+        background-color: #fff;
+
+        &:hover {
+            background-color: #ccc;
+        }
+    }
 }
 </style>
 
 <template>
 <div>
     <div id="feedback">
-        <!-- <div class="options" v-if="showFeedbackOpt">
-            <span class="option" v-for="opt in options" @click="submit(opt.code)">
-                <span class="fa-stack fa-lg">
-                  <i class="fa fa-circle fa-stack-2x"></i>
-                  <i class="fa fa-trash fa-stack-1x fa-inverse"></i>
-                </span>
-            </span>
-        </div> -->
-
         <div class="button" @click="toggleOpts">
             <i class="fa fa-plus" aria-hidden="true"></i>
         </div>
@@ -85,8 +86,8 @@ ul {
     <div id="form">
         <div v-if="showFeedbackOpt" class="box">
             <ul>
-                <li v-for="category in categories">
-                    {{ category.label }}
+                <li v-for="category in categories" @click="submit(category.cid)">
+                    {{ category.cat_text }}
                 </li>
             </ul>
         </div>
@@ -110,33 +111,17 @@ ul {
     export default {
         data() {
             return {
-                // options: [
-                //     { code: 'trash', icon: 'trash' },
-                //     { code: 'trash', icon: 'trash' },
-                //     { code: 'trash', icon: 'trash' },
-                //     { code: 'trash', icon: 'trash' },
-                //     { code: 'trash', icon: 'trash' },
-                // ],
-                categories: [
-                    {label: 'lorem1'},
-                    {label: 'lorem2'},
-                    {label: 'lorem3'},
-                    {label: 'lorem4'},
-                    {label: 'lorem5'},
-                    {label: 'lorem6'},
-                    {label: 'lorem7'},
-                    {label: 'lorem8'},
-                ],
-                showFeedbackOpt: true,
+                categories: [],
+                showFeedbackOpt: false,
                 isLoading: false,
                 isDone: false
             };
         },
 
         ready() {
-            // this.$http.get(`api/feedback-category`).then((res) => {
-            //     this.$set('categories', res.json());
-            // });
+            this.$http.get(`api/feedback-category`).then((res) => {
+                this.$set('categories', res.json());
+            });
         },
 
         methods: {
@@ -144,24 +129,29 @@ ul {
                 this.showFeedbackOpt = !this.showFeedbackOpt;
             },
 
-            submit(code) {
+            submit(categoryCid) {
                 // @TODO - Persist data-point
                 this.isLoading = true;
+                this.toggleOpts();
 
                 Locator.getLocation((coordinates) => {
                     console.log('Persist: ', coordinates);
 
-                    // @TODO - on backend callback.
-                    setTimeout(() => {
+                    this.$http.post(`api/feedback`, {
+                        lon: coordinates.lng,
+                        lat: coordinates.lat,
+                        // tstamp: '',
+                        // picture_url: '',
+                        // userid: '',
+                        feedback_category_id: categoryCid
+                    }).then((res) => {
                         this.isLoading = false;
                         this.isDone = true;
 
                         setTimeout(() => {
                             this.isDone = false;
-                            this.toggleOpts();
                         }, 4000);
-
-                    }, 2000);
+                    });
                 }, (errorMsg) => {
                     alert(errorMsg);
                 });
