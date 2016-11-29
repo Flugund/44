@@ -9,6 +9,8 @@
 </style>
 
 <template>
+    <navigation></navigation>
+
     <div id="map-canvas"></div>
 
     <feedback></feedback>
@@ -18,6 +20,7 @@
     import Locator from './Locator';
     import Feedback from './Feedback';
     import MapSettings from './MapSettings';
+    import Navigation from './Navigation';
 
     export default {
         data() {
@@ -42,7 +45,7 @@
                         center: new google.maps.LatLng(coordinates.lat, coordinates.lng),
                         zoom: 13,
                         mapTypeId: 'styled_map',
-                        disableDefaultUI: true
+                        disableDefaultUI: false
                     });
 
                     var heatmap = new google.maps.visualization.HeatmapLayer({
@@ -83,6 +86,6 @@
             }
         },
 
-        components: { Feedback }
+        components: { Feedback, Navigation }
     }
 </script>

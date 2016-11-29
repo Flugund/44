@@ -102,7 +102,7 @@ module.exports = [
       }
     ]
   },
-  {
+  /*{
     "featureType": "road",
     "elementType": "labels.icon",
     "stylers": [
@@ -118,7 +118,7 @@ module.exports = [
         "visibility": "off"
       }
     ]
-  },
+  },*/
   {
     "featureType": "road.arterial",
     "elementType": "labels.text.fill",
@@ -137,7 +137,7 @@ module.exports = [
       }
     ]
   },
-  {
+  /*{
     "featureType": "road.highway",
     "elementType": "labels",
     "stylers": [
@@ -145,7 +145,7 @@ module.exports = [
         "visibility": "off"
       }
     ]
-  },
+  },*/
   {
     "featureType": "road.highway",
     "elementType": "labels.text.fill",
@@ -155,14 +155,14 @@ module.exports = [
       }
     ]
   },
-  {
+  /*{
     "featureType": "road.local",
     "stylers": [
       {
         "visibility": "off"
       }
     ]
-  },
+  },*/
   {
     "featureType": "road.local",
     "elementType": "labels.text.fill",
