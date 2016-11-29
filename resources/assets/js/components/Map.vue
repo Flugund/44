@@ -43,6 +43,30 @@
                         disableDefaultUI: false
                     });
 
+                    map.addListener('click', (e) => {
+                        var lat = e.latLng.lat();
+                        var lng = e.latLng.lng();
+
+                        this.$http.get(`api/feedback-score?longitude=${lng}&latitude=${lat}`).then((res) => {
+                            var res = _.first(res.json());
+
+                            var score = Math.round(res.score);
+                            var propVal = Math.round(res.score * 0.3);
+
+                            var infowindow = new google.maps.InfoWindow({
+                                content: '<div>' +
+                                    `<label>Locationscore: </label> <span>${score}</span>` +
+                                    '<br/>' +
+                                    `<label>Effect on property value: </label> <span>${propVal}</span>` +
+                                '</div>'
+                            });
+
+                            infowindow.open(map);
+
+                            infowindow.setPosition(new google.maps.LatLng(lat, lng));
+                        });
+                    });
+
                     var heatmap = new google.maps.visualization.HeatmapLayer({
                       data: []
                     });
@@ -71,6 +95,7 @@
                 lat_max=40.5;
 
                 this.$http.get(`/api/feedback?longitude_min=${long_min}&latitude_min=${lat_min}&longitude_max=${long_max}&latitude_max=${lat_max}&status=1`).then((res) => {
+
                     _.each(res.json(), (item) => {
                         var marker = new google.maps.Marker({
                             position: new google.maps.LatLng(item.lat, item.lon),
