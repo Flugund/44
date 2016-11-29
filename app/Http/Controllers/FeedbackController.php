@@ -16,7 +16,7 @@ class FeedbackController extends Controller
         $userLongitudeMax = $request->get('longitude_max');
         $userLatitudeMax = $request->get('latitude_max');
 
-        $feedbacks = DB::select('exec return_feedbacks(?,?,?,?)', [$userLongitudeMin, $userLatitudeMin, $userLongitudeMax, $userLatitudeMax]); // TODO: Find out the procuedure name!
+        $feedbacks = DB::select('call return_feedbacks(?,?,?,?)', [$userLongitudeMin, $userLatitudeMin, $userLongitudeMax, $userLatitudeMax]); // TODO: Find out the procuedure name!
 
         return response()->json($feedbacks);
     }
