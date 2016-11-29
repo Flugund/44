@@ -23,7 +23,7 @@ $accent: #000;
 
 #notifier {
     position: absolute;
-    top: 15%;
+    top: 5%;
     width: 100%;
     text-align: center;
 
@@ -47,6 +47,7 @@ $accent: #000;
     overflow-y: scroll;
 
     .box {
+        overflow: auto;
         font-size: 1.2em;
         font-weight: 200;
         margin: auto;
@@ -57,21 +58,9 @@ $accent: #000;
     }
 }
 
-ul {
-    list-style-type: none;
-
-    li {
-        border-radius: 3px;
-        border: 1px solid #ccc;
-        padding: .5em;
-        margin-bottom: .3em;
-        cursor: pointer;
-        background-color: #fff;
-
-        &:hover {
-            background-color: #ccc;
-        }
-    }
+.align-footer {
+    vertical-align: top;
+    display: inline-block;
 }
 </style>
 
@@ -83,17 +72,49 @@ ul {
         </div>
     </div>
 
-    <div id="form">
-        <div v-if="showFeedbackOpt" class="box">
-            <ul>
-                <li v-for="category in categories" @click="submit(category.cid)">
-                    {{ category.cat_text }}
-                </li>
-            </ul>
+    <div id="form" v-if="showFeedbackOpt">
+        <div class="box">
+            <div class="form">
+                <div class="col-sm-12">
+                    <h2>Give your feedback</h2>
+
+                    <div class="form-group">
+                        <select class="form-control" required v-model="selectedFeedbackFilter">
+                            <option selected="selected" disabled="disabled">Feedback type</option>
+                            <option :value="1">Positive</option>
+                            <option :value="0">Negative</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select class="form-control" required v-model="newFeedback.feedback_category_id">
+                            <option selected="selected" disabled="disabled">
+                                Reporting reason
+                            </option>
+                            <option v-for="cat in feedbackCategories" :value="cat.cid">
+                                {{ cat.cat_text }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group align-footer">
+                        <label class="btn btn-default btn-file">
+                            Upload photo <input type="file" style="display: none;">
+                        </label>
+                    </div>
+
+                    <button
+                        class="btn btn-primary pull-right align-footer"
+                        @click="submit"
+                    >
+                        Submit
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="notifier">
+    <div id="notifier" v-if="isLoading || isDone">
         <div v-if="isLoading" class="notify">
             <div class="gps_ring large inline"></div>
         </div>
@@ -114,7 +135,13 @@ ul {
                 categories: [],
                 showFeedbackOpt: false,
                 isLoading: false,
-                isDone: false
+                isDone: false,
+
+                selectedFeedbackFilter: 0,
+
+                newFeedback: {
+                    feedback_category_id: ''
+                }
             };
         },
 
@@ -124,26 +151,31 @@ ul {
             });
         },
 
+        computed : {
+            feedbackCategories() {
+                return _.filter(this.categories, (category) => {
+                    return category.positive == this.selectedFeedbackFilter;
+                });
+            }
+        },
+
         methods: {
             toggleOpts() {
                 this.showFeedbackOpt = !this.showFeedbackOpt;
             },
 
-            submit(categoryCid) {
-                // @TODO - Persist data-point
+            submit() {
                 this.isLoading = true;
                 this.toggleOpts();
 
                 Locator.getLocation((coordinates) => {
-                    console.log('Persist: ', coordinates);
-
                     this.$http.post(`api/feedback`, {
                         lon: coordinates.lng,
                         lat: coordinates.lat,
                         // tstamp: '',
                         // picture_url: '',
                         // userid: '',
-                        feedback_category_id: categoryCid
+                        feedback_category_id: this.newFeedback.categoryCid
                     }).then((res) => {
                         this.isLoading = false;
                         this.isDone = true;
