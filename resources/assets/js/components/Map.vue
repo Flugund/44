@@ -59,14 +59,14 @@
                         var ne = bb.getNorthEast(); // top-left
                         var sw = bb.getSouthWest(); // bottom-right
 
-                        this.fetchDataPoints(heatmap, sw.lng(), ne.lat(), ne.lng(), sw.lat());
+                        this.fetchDataPoints(heatmap, sw.lng(), ne.lat(), ne.lng(), sw.lat(), map);
                     });
                 }, (errorMsg) => {
                     alert(errorMsg);
                 });
             },
 
-            fetchDataPoints(heatmap, long_min, lat_min, long_max, lat_max) {
+            fetchDataPoints(heatmap, long_min, lat_min, long_max, lat_max, map) {
                 var heatmapData = [];
 
                 // fake the bound of the map.
@@ -75,7 +75,16 @@
                 long_max=-74.0;
                 lat_max=40.5;
 
-                this.$http.get(`/api/feedback?longitude_min=${long_min}&latitude_min=${lat_min}&longitude_max=${long_max}&latitude_max=${lat_max}`).then((res) => {
+                this.$http.get(`/api/feedback?longitude_min=${long_min}&latitude_min=${lat_min}&longitude_max=${long_max}&latitude_max=${lat_max}&status=1`).then((res) => {
+                    _.each(res.json(), (item) => {
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(item.lat, item.lon),
+                            map: map
+                        });
+                    });
+                });
+
+                this.$http.get(`/api/feedback?longitude_min=${long_min}&latitude_min=${lat_min}&longitude_max=${long_max}&latitude_max=${lat_max}&status=2`).then((res) => {
 
                     _.each(res.json(), (item) => {
                         heatmapData.push(new google.maps.LatLng(item.lat, item.lon));

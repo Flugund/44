@@ -45,7 +45,6 @@
         <i class="fa fa-user" @click="toggleUserProfile"></i> <br/>
         {{ user.points }}
     </div>
-    
 
     <div class="user" v-if="user.show">
         <h1>Points: {{ user.points }}</h1>
