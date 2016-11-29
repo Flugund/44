@@ -28,12 +28,11 @@
         },
 
         ready() {
-            google.maps.event.addDomListener(window, 'load', this.initMap());
+            // google.maps.event.addDomListener(window, 'load', this.initMap());
         },
 
         methods: {
             initMap() {
-
                 Locator.getLocation((coordinates) => {
                     var styledMapType = new google.maps.StyledMapType(MapSettings);
 

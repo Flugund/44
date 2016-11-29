@@ -97,11 +97,26 @@ $accent: #000;
                         </select>
                     </div>
 
-                    <div class="form-group align-footer">
+               <!--      <div class="form-group align-footer">
                         <label class="btn btn-default btn-file">
                             Upload photo <input type="file" style="display: none;">
                         </label>
+                    </div> -->
+
+                    <div class="form-group align-footer">
+                        <label class="btn btn-default btn-file">
+                            Upload photo <input type="file" @change="upload" style="display: none;" id="file_upload_button">
+                        </label>
+                        <span id = "upload_progress">
                     </div>
+                    <input
+                        id="id_storage_url"
+                        name="storage_url"
+                        style="display: None;"
+                        type="text"
+                        value=""
+                        required
+                    >
 
                     <button
                         class="btn btn-primary pull-right align-footer"
@@ -128,6 +143,7 @@ $accent: #000;
 
 <script>
     import Locator from './Locator';
+    import Uploader from './Uploader';
 
     export default {
         data() {
@@ -140,7 +156,8 @@ $accent: #000;
                 selectedFeedbackFilter: 0,
 
                 newFeedback: {
-                    feedback_category_id: ''
+                    feedback_category_id: '',
+                    url: ''
                 }
             };
         },
@@ -173,7 +190,7 @@ $accent: #000;
                         lon: coordinates.lng,
                         lat: coordinates.lat,
                         // tstamp: '',
-                        // picture_url: '',
+                        picture_url: document.getElementById('id_storage_url').value,
                         // userid: '',
                         feedback_category_id: this.newFeedback.categoryCid
                     }).then((res) => {
@@ -187,6 +204,14 @@ $accent: #000;
                 }, (errorMsg) => {
                     alert(errorMsg);
                 });
+            },
+
+            upload() {
+                var kmskeyid = '';
+                var obj = document.getElementById('file_upload_button');
+                var folder = Math.random().toString();
+
+                Uploader.upload(obj, folder);
             }
         }
     }
